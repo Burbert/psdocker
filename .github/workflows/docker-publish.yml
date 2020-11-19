@@ -31,5 +31,5 @@ jobs:
           Set-Location -Path "$($env:GITHUB_WORKSPACE)/container/module"
           
           docker build -t psmodule:latest .
-          docker tag connector:latest "$($env:AZURE_ACR_URL)/psmodule/psmodule:latest"
+          docker tag psmodule:latest "$($env:AZURE_ACR_URL)/psmodule/psmodule:latest"
           docker push "$($env:AZURE_ACR_URL)/psmodule/psmodule:latest"
