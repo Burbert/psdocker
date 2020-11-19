@@ -1,4 +1,4 @@
-name: Build Container
+name: build container and push to azure container registry
 
 on:
   push:
