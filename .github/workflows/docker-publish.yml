@@ -27,3 +27,9 @@ jobs:
           az login --service-principal --user $env:AZURE_CLIENT_ID --password $env:AZURE_CLIENT_SECRET --tenant $env:AZURE_TENANT_ID
           az account set --subscription $env:AZURE_SUBSCRIPTION_ID
           az acr login --name $env:AZURE_ACR_URL
+
+          Set-Location -Path "$($env:GITHUB_WORKSPACE)/container/module"
+          
+          docker build -t psmodule:latest .
+          docker tag connector:latest "$($env:AZURE_ACR_URL)/psmodule/psmodule:latest"
+          docker push "$($env:AZURE_ACR_URL)/psmodule/psmodule:latest"
