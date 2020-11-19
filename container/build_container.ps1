@@ -11,7 +11,7 @@ az acr login --name $env:AZURE_ACR_URL
 
 
 
-foreach ($folder in (Get-ChildItem -Path .\container\ -Directory)){
+foreach ($folder in (Get-ChildItem -Path "$($env:GITHUB_WORKSPACE)/container" -Directory)){
     $folder_content = Get-ChildItem -Path $folder.FullName
     if('Dockerfile' -in $($folder_content.name)){
         Write-Output "processing folder: `'$($folder.FullName)`'"
