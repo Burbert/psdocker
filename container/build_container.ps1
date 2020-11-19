@@ -18,12 +18,12 @@ foreach ($folder in (Get-ChildItem -Path "$($env:GITHUB_WORKSPACE)/container" -D
         $version = Get-Content -Path "$($folder.FullName)\version.json" | ConvertFrom-Json | Select-Object -ExpandProperty version
         # Write-Output "version: `'$($folder.name)`'"
 
-        docker build -t $($folder.name):$($version) .
-        docker tag $($folder.name):$($version) "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):$($version)"
+        docker build -t "$($folder.name):$($version)" .
+        docker tag "$($folder.name):$($version)" "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):$($version)"
         docker push "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):$($version)"
         
-        docker build -t $($folder.name):latest .
-        docker tag $($folder.name):latest "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):latest"
+        docker build -t "$($folder.name):latest" .
+        docker tag "$($folder.name):latest" "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):latest"
         docker push "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):latest"
     } else {
         Write-Output "skip folder $($folder.FullName)"
