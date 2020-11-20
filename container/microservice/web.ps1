@@ -19,4 +19,10 @@ Start-PodeServer {
 
         Write-PodeJsonResponse -Value @{ 'response' = 'hey ho!' } -StatusCode 200
     }
+
+    Add-PodeRoute -Method Get -Path '/error' -ScriptBlock {             
+        # Write-PodeTextResponse -Value 'Hello from PowerShell in Docker'
+
+        Write-PodeJsonResponse -Value @{ 'response' = 'Error - everything is broken!' } -StatusCode 400
+    }
 }
