@@ -3,8 +3,6 @@ name: build container and push to azure container registry
 on:
   push:
     branches: [ main ]
-#     paths: 
-#       - 'container/*'
 
 jobs:
   build:
