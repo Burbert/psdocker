@@ -1,4 +1,4 @@
-# login to azure using azure cli
+# login to Azure Container Registry using azure cli
 az login --service-principal --username $env:AZ_CLIENT_ID --password "$($env:AZ_CLIENT_SECRET)" --tenant $env:AZURE_TENANT_ID
 az account set --subscription $env:AZURE_SUBSCRIPTION_ID
 az acr login --name $env:AZURE_ACR_URL
@@ -15,15 +15,15 @@ foreach ($folder in (Get-ChildItem -Path "$($env:GITHUB_WORKSPACE)/container" -D
             continue
         }
 
-        # set location folder
+        # set working directory
         Set-Location -Path $folder.FullName
 
-        # build container with version as tag
+        # build container with version tag
         docker build -t "$($folder.name):$($version)" .
         docker tag "$($folder.name):$($version)" "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):$($version)"
         docker push "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):$($version)"
         
-        # build container with lastest as tag
+        # build container with lastest tag
         docker build -t "$($folder.name):latest" .
         docker tag "$($folder.name):latest" "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):latest"
         docker push "$($env:AZURE_ACR_URL)/$($folder.name)/$($folder.name):latest"
